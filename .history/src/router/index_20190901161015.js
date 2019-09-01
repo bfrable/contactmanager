@@ -11,22 +11,7 @@ export default new Router({
         {
             path: '*',
             redirect: '/login'
-        },
-        {
-            path: '/',
-            name: 'Login',
-            component: Login
-        },
-        {
-            path: '/login',
-            name: 'Login',
-            component: Login
-        },
-        {
-            path: '/sign-up',
-            name: 'Sign Up',
-            component: SignUp
-        },
+        }
         {
             path: '/home',
             name: 'Home',
@@ -34,6 +19,16 @@ export default new Router({
             meta: {
                 requiresAuth: true
             }
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/',
+            name: 'Sign Up',
+            component: SignUp
         },
     ]
 })

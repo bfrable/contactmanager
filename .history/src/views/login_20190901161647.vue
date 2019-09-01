@@ -38,7 +38,7 @@ import router from '@/router';
 export default {
   name: 'Login',
   components: {
-      router,
+      router
   },
   data: () => ({
     valid: false,
