@@ -6,7 +6,7 @@
         <v-container class="fill-height" fluid>
             This is the contacts
 
-            {{ this.$store.state.user.user.email }}
+            {{ this.$store.state.user.email }}
         </v-container>
 
         <v-btn bottom color="pink" dark fab fixed right @click="dialog = !dialog">

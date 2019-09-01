@@ -39,7 +39,7 @@ export const store = new Vuex.Store({
           alert('success');
           commit('setUser', user);
           commit('setIsAuthenticated', true);
-          router.push('/profile');
+          router.push('/home');
         })
         .catch((err) => {
           alert(err.message);
@@ -59,7 +59,7 @@ export const store = new Vuex.Store({
         .then(user => {
           commit('setUser', user);
           commit('setIsAuthenticated', true);
-          router.push('/');
+          router.push('/home');
         })
         .catch((err) => {
           alert(err.message);

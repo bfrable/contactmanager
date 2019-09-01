@@ -22,8 +22,8 @@
           </v-col>
 
           <v-col cols="12" md="12" class="text-center">
-            <v-btn large color="primary" dark class="ma-2" @click.stop="logIn()">Login</v-btn>
-            <v-btn large color="success" dark class="ma-2" @click.stop="router.push('/sign-up');">Signup</v-btn>
+            <v-btn large color="primary" dark class="ma-2">Login</v-btn>
+            <v-btn large color="success" dark class="ma-2" @click.stop="signUp()">Signup</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -51,7 +51,7 @@ export default {
     }
   }),
   methods: {
-    logIn() {
+    signUp() {
       this.$store.dispatch('userLogin', {
         email: this.email,
         password: this.password
