@@ -8,7 +8,7 @@ Vue.use(Router)
 
 export default new Router({
     routes: [{
-            path: '/home',
+            path: '/',
             name: 'Home',
             component: Home,
             meta: {
@@ -21,9 +21,14 @@ export default new Router({
             component: Login
         },
         {
-            path: '/',
+            path: '/sign-up',
             name: 'Sign Up',
             component: SignUp
         },
+        {
+            path: '/profile',
+            name: 'Profile',
+            component: Profile
+        }
     ]
 })

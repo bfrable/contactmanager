@@ -12,7 +12,7 @@
           </v-col>
 
           <v-col cols="12" md="12">
-            <v-text-field v-model="employeeID" label="Employee ID" required></v-text-field>
+            <v-text-field v-model="employeeID" label="Employee Number" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12">
@@ -46,8 +46,6 @@ export default {
   data: () => ({
     valid: false,
     email: '',
-    name: '',
-    employeeID: '',
     show1: false,
     password: '',
     emailRules: [

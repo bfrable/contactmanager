@@ -4,7 +4,7 @@
       <v-form v-model="valid" class="login-form">
         <v-row>
           <v-col cols="12" md="12">
-            <v-text-field v-model="name" label="Name" required></v-text-field>
+            <v-text-field v-model="this.$store.state.user.user.email" label="Name" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12">
@@ -12,7 +12,7 @@
           </v-col>
 
           <v-col cols="12" md="12">
-            <v-text-field v-model="employeeID" label="Employee ID" required></v-text-field>
+            <v-text-field v-model="employeeID" label="Employee Number" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12">
@@ -42,12 +42,12 @@
 import firebase from "firebase";
 
 export default {
-  name: 'Login',
+  name: 'Profile',
   data: () => ({
     valid: false,
-    email: '',
     name: '',
     employeeID: '',
+    email: '',
     show1: false,
     password: '',
     emailRules: [

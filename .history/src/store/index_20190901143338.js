@@ -42,49 +42,18 @@ export const store = new Vuex.Store({
       commit
     }, {
       email,
-      password,
-      name,
-      employeeID,
+      password
     }) {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(email, password)
+        .createUserWithEmailAndPassword(email, password, name, employeeID)
         .then(user => {
           alert('success');
           commit('setUser', user);
-          commit('setEmail', user.user.email);
           commit('setIsAuthenticated', true);
-        })
-        .then(user => {
-          user = firebase.auth().currentUser;
-
-          if (user) {
-            user.updateProfile({
-              displayName: name,
-            })
-            .then(() => {
-              alert('profile updated' + user.displayName);
-              commit('setName', user.displayName);
-            })
-            .then(() => {
-              firebase.database().ref('users/' + user.uid).set({
-                employeeID: employeeID,
-              });
-            })
-            .then(() => {
-              firebase.database().ref('/users/' + user.uid).once('value').
-              then(function(snapshot) {
-                alert('employeeID updated' + snapshot.val().employeeID);
-                commit('setEmployeeID', snapshot.val().employeeID);
-                router.push('/');
-              });
-            })
-            .catch((err) => {
-              alert(err.message);
-              commit('setName', null);
-              commit('setEmployeeID', null);
-            })
-          }
+          commit('setName', name);
+          commit('setEmployeeID', employeeID);
+          router.push('/');
         })
         .catch((err) => {
           alert(err.message);
@@ -97,6 +66,27 @@ export const store = new Vuex.Store({
     }, {
       email,
       password
+    }) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(user => {
+          commit('setUser', user);
+          commit('setIsAuthenticated', true);
+          router.push('/');
+        })
+        .catch((err) => {
+          alert(err.message);
+          commit('setUser', null);
+          commit('setIsAuthenticated', false);
+        });
+    },
+    updateProfile({
+      commit
+    }, {
+      email,
+      name,
+      employeeID
     }) {
       firebase
         .auth()

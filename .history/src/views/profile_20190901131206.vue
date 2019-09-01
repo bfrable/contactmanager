@@ -6,27 +6,13 @@
           <v-col cols="12" md="12">
             <v-text-field v-model="name" label="Name" required></v-text-field>
           </v-col>
-
+            {{ this.$store.state.user.user }}
           <v-col cols="12" md="12">
-            <v-text-field v-model="email" :rules="emailRules" label="Email" required>hey</v-text-field>
+            <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12">
             <v-text-field v-model="employeeID" label="Employee Number" required></v-text-field>
-          </v-col>
-
-          <v-col cols="12" md="12">
-            <v-text-field
-              v-model="password"
-              :append-icon="show1 ? 'visibility' : 'visibility_off'"
-              :rules="[rules.required, rules.min]"
-              :type="show1 ? 'text' : 'password'"
-              name="input-10-1"
-              label="Pasword"
-              hint="At least 8 characters"
-              counter
-              @click:append="show1 = !show1"
-            ></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12" class="text-center">
@@ -45,7 +31,9 @@ export default {
   name: 'Profile',
   data: () => ({
     valid: false,
-    email: '',
+    name: '',
+    employeeID: '',
+    email: 'test',
     show1: false,
     password: '',
     emailRules: [

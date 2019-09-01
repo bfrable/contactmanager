@@ -8,16 +8,16 @@
           </v-col>
 
           <v-col cols="12" md="12">
-            <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
+            <v-text-field v-model="this.$store.state.user.user.email" :rules="emailRules" label="Email" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12">
-            <v-text-field v-model="employeeID" label="Employee ID" required></v-text-field>
+            <v-text-field v-model="employeeID" label="Employee Number" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12">
             <v-text-field
-              v-model="password"
+              v-model="this.$store.state.user.user.password"
               :append-icon="show1 ? 'visibility' : 'visibility_off'"
               :rules="[rules.required, rules.min]"
               :type="show1 ? 'text' : 'password'"
@@ -42,12 +42,12 @@
 import firebase from "firebase";
 
 export default {
-  name: 'Login',
+  name: 'Profile',
   data: () => ({
     valid: false,
-    email: '',
     name: '',
     employeeID: '',
+    email: '',
     show1: false,
     password: '',
     emailRules: [
@@ -59,6 +59,11 @@ export default {
       min: v => v.length >= 8 || 'Min 8 characters'
     }
   }),
+  computed: {
+      emailAddress () {
+        return 'bfrable@gmail.com';
+      }
+  },
   methods: {
     signUp() {
       this.$store.dispatch('userJoin', {

@@ -57,34 +57,24 @@ export const store = new Vuex.Store({
         })
         .then(user => {
           user = firebase.auth().currentUser;
-
+          console.log(user);
           if (user) {
             user.updateProfile({
               displayName: name,
-            })
-            .then(() => {
+            }).then(function() {
               alert('profile updated' + user.displayName);
               commit('setName', user.displayName);
-            })
-            .then(() => {
-              firebase.database().ref('users/' + user.uid).set({
-                employeeID: employeeID,
-              });
-            })
-            .then(() => {
-              firebase.database().ref('/users/' + user.uid).once('value').
-              then(function(snapshot) {
-                alert('employeeID updated' + snapshot.val().employeeID);
-                commit('setEmployeeID', snapshot.val().employeeID);
-                router.push('/');
-              });
-            })
-            .catch((err) => {
+              router.push('/');
+            }, function(err) {
               alert(err.message);
               commit('setName', null);
-              commit('setEmployeeID', null);
-            })
+            });
           }
+        })
+        .then((user) => {
+          user = firebase.auth().currentUser;
+
+          console.log(user.user.uid);
         })
         .catch((err) => {
           alert(err.message);

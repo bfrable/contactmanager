@@ -12,21 +12,7 @@
           </v-col>
 
           <v-col cols="12" md="12">
-            <v-text-field v-model="employeeID" label="Employee ID" required></v-text-field>
-          </v-col>
-
-          <v-col cols="12" md="12">
-            <v-text-field
-              v-model="password"
-              :append-icon="show1 ? 'visibility' : 'visibility_off'"
-              :rules="[rules.required, rules.min]"
-              :type="show1 ? 'text' : 'password'"
-              name="input-10-1"
-              label="Pasword"
-              hint="At least 8 characters"
-              counter
-              @click:append="show1 = !show1"
-            ></v-text-field>
+            <v-text-field v-model="employeeID" label="Employee Number" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12" class="text-center">
@@ -42,26 +28,28 @@
 import firebase from "firebase";
 
 export default {
-  name: 'Login',
-  data: () => ({
-    valid: false,
-    email: '',
-    name: '',
-    employeeID: '',
-    show1: false,
-    password: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid'
-    ],
-    rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters'
-    }
-  }),
+  name: "Profile",
+  data: function() {
+    return {
+      valid: false,
+      name: "",
+      employeeID: "",
+      email: this.$store.state.user.user.email,
+      show1: false,
+      password: "",
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+/.test(v) || "E-mail must be valid"
+      ],
+      rules: {
+        required: value => !!value || "Required.",
+        min: v => v.length >= 8 || "Min 8 characters"
+      }
+    };
+  },
   methods: {
     signUp() {
-      this.$store.dispatch('userJoin', {
+      this.$store.dispatch("userJoin", {
         name: this.name,
         email: this.email,
         employeeID: this.employeeID,

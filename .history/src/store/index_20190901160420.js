@@ -74,9 +74,10 @@ export const store = new Vuex.Store({
             .then(() => {
               firebase.database().ref('/users/' + user.uid).once('value').
               then(function(snapshot) {
-                alert('employeeID updated' + snapshot.val().employeeID);
-                commit('setEmployeeID', snapshot.val().employeeID);
-                router.push('/');
+                console.log(snapshot.employeeID);
+                // alert('employeeID updated' + users.uid.employeeID);
+                // commit('setEmployeeID', user.employeeID);
+                // router.push('/');
               });
             })
             .catch((err) => {

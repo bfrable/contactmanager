@@ -12,7 +12,7 @@
           </v-col>
 
           <v-col cols="12" md="12">
-            <v-text-field v-model="employeeID" label="Employee ID" required></v-text-field>
+            <v-text-field v-model="employeeID" label="Employee Number" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12">
@@ -42,12 +42,12 @@
 import firebase from "firebase";
 
 export default {
-  name: 'Login',
+  name: 'Profile',
   data: () => ({
     valid: false,
-    email: '',
     name: '',
     employeeID: '',
+    email: this.emailAddress,
     show1: false,
     password: '',
     emailRules: [
@@ -59,6 +59,11 @@ export default {
       min: v => v.length >= 8 || 'Min 8 characters'
     }
   }),
+  computed: {
+      emailAddress() {
+        return 'bfrable@gmail.com';
+      }
+  },
   methods: {
     signUp() {
       this.$store.dispatch('userJoin', {

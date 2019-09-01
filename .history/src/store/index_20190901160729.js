@@ -76,7 +76,7 @@ export const store = new Vuex.Store({
               then(function(snapshot) {
                 alert('employeeID updated' + snapshot.val().employeeID);
                 commit('setEmployeeID', snapshot.val().employeeID);
-                router.push('/');
+                // router.push('/');
               });
             })
             .catch((err) => {

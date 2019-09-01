@@ -12,7 +12,7 @@
           </v-col>
 
           <v-col cols="12" md="12">
-            <v-text-field v-model="employeeID" label="Employee ID" required></v-text-field>
+            <v-text-field v-model="employeeID" label="Employee Number" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="12">
@@ -40,28 +40,32 @@
 
 <script>
 import firebase from "firebase";
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'Login',
+  name: "Profile",
   data: () => ({
     valid: false,
-    email: '',
-    name: '',
-    employeeID: '',
+    name: "",
+    employeeID: "",
+    email: this.$store.state.user.user.email,
     show1: false,
-    password: '',
+    password: "",
     emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid'
+      v => !!v || "E-mail is required",
+      v => /.+@.+/.test(v) || "E-mail must be valid"
     ],
     rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters'
+      required: value => !!value || "Required.",
+      min: v => v.length >= 8 || "Min 8 characters"
     }
   }),
+  computed: {
+    ...mapGetters(["emailAddress"])
+  },
   methods: {
     signUp() {
-      this.$store.dispatch('userJoin', {
+      this.$store.dispatch("userJoin", {
         name: this.name,
         email: this.email,
         employeeID: this.employeeID,

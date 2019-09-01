@@ -25,13 +25,13 @@ export const store = new Vuex.Store({
       state.isAuthenticated = payload;
     },
     setName(state, payload) {
-      state.name = payload;
+
     },
     setEmployeeID(state, payload) {
-      state.employeeID = payload;
+
     },
     setEmail(state, payload) {
-      state.email = payload;
+
     }
   },
   getters: {
@@ -42,9 +42,7 @@ export const store = new Vuex.Store({
       commit
     }, {
       email,
-      password,
-      name,
-      employeeID,
+      password
     }) {
       firebase
         .auth()
@@ -52,39 +50,8 @@ export const store = new Vuex.Store({
         .then(user => {
           alert('success');
           commit('setUser', user);
-          commit('setEmail', user.user.email);
           commit('setIsAuthenticated', true);
-        })
-        .then(user => {
-          user = firebase.auth().currentUser;
-
-          if (user) {
-            user.updateProfile({
-              displayName: name,
-            })
-            .then(() => {
-              alert('profile updated' + user.displayName);
-              commit('setName', user.displayName);
-            })
-            .then(() => {
-              firebase.database().ref('users/' + user.uid).set({
-                employeeID: employeeID,
-              });
-            })
-            .then(() => {
-              firebase.database().ref('/users/' + user.uid).once('value').
-              then(function(snapshot) {
-                alert('employeeID updated' + snapshot.val().employeeID);
-                commit('setEmployeeID', snapshot.val().employeeID);
-                router.push('/');
-              });
-            })
-            .catch((err) => {
-              alert(err.message);
-              commit('setName', null);
-              commit('setEmployeeID', null);
-            })
-          }
+          router.push('/profile');
         })
         .catch((err) => {
           alert(err.message);

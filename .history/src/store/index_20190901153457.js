@@ -62,27 +62,20 @@ export const store = new Vuex.Store({
             user.updateProfile({
               displayName: name,
             })
+            // firebase.database().ref('users/' + userId).set({
+            //   username: name,
+            //   email: email,
+            //   profile_picture : imageUrl,
+            //   // Add more stuff here
+            // });
             .then(() => {
               alert('profile updated' + user.displayName);
               commit('setName', user.displayName);
-            })
-            .then(() => {
-              firebase.database().ref('users/' + user.uid).set({
-                employeeID: employeeID,
-              });
-            })
-            .then(() => {
-              firebase.database().ref('/users/' + user.uid).once('value').
-              then(function(snapshot) {
-                alert('employeeID updated' + snapshot.val().employeeID);
-                commit('setEmployeeID', snapshot.val().employeeID);
-                router.push('/');
-              });
+              router.push('/');
             })
             .catch((err) => {
               alert(err.message);
               commit('setName', null);
-              commit('setEmployeeID', null);
             })
           }
         })

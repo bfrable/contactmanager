@@ -49,41 +49,24 @@ export const store = new Vuex.Store({
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(user => {
+        .then((user, name, employeeID) => {
           alert('success');
           commit('setUser', user);
-          commit('setEmail', user.user.email);
           commit('setIsAuthenticated', true);
-        })
-        .then(user => {
-          user = firebase.auth().currentUser;
-
           if (user) {
             user.updateProfile({
               displayName: name,
-            })
-            .then(() => {
-              alert('profile updated' + user.displayName);
+              employeeID: employeeID
+            }).then(function() {
+              alert('profile updated');
               commit('setName', user.displayName);
-            })
-            .then(() => {
-              firebase.database().ref('users/' + user.uid).set({
-                employeeID: employeeID,
-              });
-            })
-            .then(() => {
-              firebase.database().ref('/users/' + user.uid).once('value').
-              then(function(snapshot) {
-                alert('employeeID updated' + snapshot.val().employeeID);
-                commit('setEmployeeID', snapshot.val().employeeID);
-                router.push('/');
-              });
-            })
-            .catch((err) => {
+              commit('setEmployeeID', user.employeeID);
+              router.push('/');
+            }, function(err) {
               alert(err.message);
               commit('setName', null);
               commit('setEmployeeID', null);
-            })
+            });
           }
         })
         .catch((err) => {
@@ -111,6 +94,6 @@ export const store = new Vuex.Store({
           commit('setUser', null);
           commit('setIsAuthenticated', false);
         });
-    },
+    }
   }
 });

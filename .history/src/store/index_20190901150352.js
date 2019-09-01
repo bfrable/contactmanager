@@ -51,39 +51,28 @@ export const store = new Vuex.Store({
         .createUserWithEmailAndPassword(email, password)
         .then(user => {
           alert('success');
+          console.log(user.user.email);
           commit('setUser', user);
-          commit('setEmail', user.user.email);
+          commit('setEmail', user.email);
           commit('setIsAuthenticated', true);
         })
         .then(user => {
           user = firebase.auth().currentUser;
-
+          console.log(user);
           if (user) {
             user.updateProfile({
               displayName: name,
-            })
-            .then(() => {
+              employeeID: employeeID
+            }).then(function() {
               alert('profile updated' + user.displayName);
               commit('setName', user.displayName);
-            })
-            .then(() => {
-              firebase.database().ref('users/' + user.uid).set({
-                employeeID: employeeID,
-              });
-            })
-            .then(() => {
-              firebase.database().ref('/users/' + user.uid).once('value').
-              then(function(snapshot) {
-                alert('employeeID updated' + snapshot.val().employeeID);
-                commit('setEmployeeID', snapshot.val().employeeID);
-                router.push('/');
-              });
-            })
-            .catch((err) => {
+              commit('setEmployeeID', user.employeeID);
+              router.push('/');
+            }, function(err) {
               alert(err.message);
               commit('setName', null);
               commit('setEmployeeID', null);
-            })
+            });
           }
         })
         .catch((err) => {
