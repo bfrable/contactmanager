@@ -1,6 +1,12 @@
 <template>
-  <v-app>    
-    <router-view></router-view>
+  <v-app>
+    <Toolbar />
+
+    <v-content>
+
+      <router-view></router-view>
+
+    </v-content>
   </v-app>
 </template>
 
@@ -10,13 +16,13 @@ import Toolbar from "./components/Toolbar";
 export default {
   name: "App",
   props: {
-    //
+    source: String
   },
   components: {
     Toolbar,
   },
   data: () => ({
-    //
+    dialog: false,
   })
 };
 </script>

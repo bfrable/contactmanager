@@ -1,7 +1,8 @@
 <template>
     <v-content>
-        <Toolbar />  
+
         <Drawer />
+
 
         <v-container class="fill-height" fluid>
             This is the contacts

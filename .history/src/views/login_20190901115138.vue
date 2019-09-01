@@ -23,7 +23,7 @@
 
           <v-col cols="12" md="12" class="text-center">
             <v-btn large color="primary" dark class="ma-2">Login</v-btn>
-            <v-btn large color="success" dark class="ma-2" @click.stop="signUp()">Signup</v-btn>
+            <v-btn large color="success" dark class="ma-2">Signup</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -47,7 +47,7 @@ export default {
     }
   }),
   methods: {
-    signUp() {
+    signup() {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)

@@ -11,18 +11,6 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.config.productionTip = false
 
-var firebaseConfig = {
-  apiKey: "AIzaSyAl_3ub0die2r-JhFR_RSLwPTiMAl8SO0U",
-  authDomain: "contact-manager-5e848.firebaseapp.com",
-  databaseURL: "https://contact-manager-5e848.firebaseio.com",
-  projectId: "contact-manager-5e848",
-  storageBucket: "",
-  messagingSenderId: "863242654524",
-  appId: "1:863242654524:web:5858270aed532595"
-};
-
-firebase.initializeApp(firebaseConfig);
-
 Vue.use(Vuex);
 
 new Vue({

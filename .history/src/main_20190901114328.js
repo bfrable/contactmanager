@@ -11,7 +11,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.config.productionTip = false
 
-var firebaseConfig = {
+ var firebaseConfig = {
   apiKey: "AIzaSyAl_3ub0die2r-JhFR_RSLwPTiMAl8SO0U",
   authDomain: "contact-manager-5e848.firebaseapp.com",
   databaseURL: "https://contact-manager-5e848.firebaseio.com",

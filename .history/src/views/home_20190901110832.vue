@@ -1,6 +1,5 @@
 <template>
-    <v-content>
-        <Toolbar />  
+    <v-container>
         <Drawer />
 
         <v-container class="fill-height" fluid>
@@ -49,7 +48,7 @@
             </v-card-actions>
         </v-card>
         </v-dialog>
-    </v-content>
+    </v-container>
 </template>
 
 <script>

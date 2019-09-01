@@ -1,11 +1,8 @@
 <template>
-    <v-content>
-        <Toolbar />  
+    <div>
         <Drawer />
 
-        <v-container class="fill-height" fluid>
-            This is the contacts
-        </v-container>
+        This is the contacts
 
         <v-btn bottom color="pink" dark fab fixed right @click="dialog = !dialog">
         <v-icon>mdi-plus</v-icon>
@@ -49,7 +46,7 @@
             </v-card-actions>
         </v-card>
         </v-dialog>
-    </v-content>
+    </div>
 </template>
 
 <script>

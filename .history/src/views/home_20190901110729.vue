@@ -1,6 +1,5 @@
 <template>
-    <v-content>
-        <Toolbar />  
+    <v-content style="p-0">
         <Drawer />
 
         <v-container class="fill-height" fluid>
