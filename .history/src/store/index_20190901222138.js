@@ -12,8 +12,7 @@ export const store = new Vuex.Store({
     isAuthenticated: false,
     name: null,
     employeeID: null,
-    email: null,
-    contacts: []
+    email: null
   },
   mutations: {
     toggleDrawer(state) {

@@ -9,7 +9,7 @@
             {{ this.$store.state.user.user.email }}
         </v-container>
 
-        <v-btn bottom color="pink" dark fab fixed right @click="toggleCreateContactDialog()">
+        <v-btn bottom color="pink" dark fab fixed right @click="this.$root.$children[0].$children[0].$refs.createContactDialog.toggleDialog = !this.$root.$children[0].$refs.createContactDialog.toggleDialog">
             <v-icon>mdi-plus</v-icon>
         </v-btn>
 
@@ -34,11 +34,6 @@ export default {
   },
   data: () => ({
     //
-  }),
-  methods: {
-      toggleCreateContactDialog() {
-          this.$refs.createContactDialog.toggleDialog = !this.$refs.createContactDialog.toggleDialog
-      }
-  }
+  })
 };
 </script>

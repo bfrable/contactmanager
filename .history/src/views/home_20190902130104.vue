@@ -9,36 +9,29 @@
             {{ this.$store.state.user.user.email }}
         </v-container>
 
-        <v-btn bottom color="pink" dark fab fixed right @click="toggleCreateContactDialog()">
+        <v-btn bottom color="pink" dark fab fixed right @click="createContactDialog = !createContactDialog">
             <v-icon>mdi-plus</v-icon>
         </v-btn>
 
-        <CreateContactDialog ref="createContactDialog" />
     </v-content>
 </template>
 
 <script>
 import Toolbar from "@/components/Toolbar";
 import Drawer from "@/components/Drawer";
-import CreateContactDialog from '@/components/CreateContactDialog'
+import createContactDialog from '@/components/CreateContactDialog'
 
 export default {
   name: "Home",
   props: {
-    //
+    source: String
   },
   components: {
     Toolbar,
-    Drawer,
-    CreateContactDialog
+    Drawer
   },
   data: () => ({
-    //
-  }),
-  methods: {
-      toggleCreateContactDialog() {
-          this.$refs.createContactDialog.toggleDialog = !this.$refs.createContactDialog.toggleDialog
-      }
-  }
+    dialog: false,
+  })
 };
 </script>
