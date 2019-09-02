@@ -29,5 +29,26 @@ new Vue({
   vuetify,
   store,
   router,
-  render: h => h(App)
+  render: h => h(App),
+  created () {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.$store.commit('SET_USER', user);
+          this.$store.commit('SET_UID', user.uid);
+          this.$store.commit('SET_NAME', user.displayName);
+          this.$store.commit('SET_EMAIL', user.email);
+          this.$store.commit('SET_IS_AUTHENTICATED', true);
+
+          firebase.database().ref(`/users/${user.uid}/groups`).once('value')
+          .then((snapshot) => {
+            console.log(snapshot); 
+            snapshot.forEach((group) => {
+              this.$store.commit('SET_GROUPS', group.key);
+            });
+          });
+        } else {
+            router.push('/');
+        }
+    });
+  },
 }).$mount('#app')

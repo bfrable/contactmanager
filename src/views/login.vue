@@ -32,13 +32,12 @@
 </template>
 
 <script>
-import firebase from "firebase";
 import router from '@/router';
 
 export default {
   name: 'Login',
   components: {
-      router,
+    //
   },
   data: () => ({
     valid: false,

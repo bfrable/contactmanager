@@ -34,7 +34,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
-        <v-list-item v-else :key="item.text" @click>
+        <v-list-item v-else :key="item.text">
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
