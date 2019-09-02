@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="toggleDialog" width="800px">
     <v-card>
-      <v-card-title class="grey darken-2">Create contact</v-card-title>
+      <v-card-title class="blue">Create Contact</v-card-title>
       <v-container>
         <v-row>
           <v-col class="align-center justify-space-between" cols="12">
@@ -29,8 +29,8 @@
       <v-card-actions>
         <v-btn text color="primary">More</v-btn>
         <div class="flex-grow-1"></div>
-        <v-btn text color="primary" @click="dialog = false">Cancel</v-btn>
-        <v-btn text @click="dialog = false">Save</v-btn>
+        <v-btn text color="primary" @click="toggleDialog = false">Cancel</v-btn>
+        <v-btn text @click="toggleDialog = false">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

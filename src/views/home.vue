@@ -13,6 +13,7 @@
             <v-icon>mdi-plus</v-icon>
         </v-btn>
 
+        <CreateGroupDialog ref="createGroupDialog" />
         <CreateContactDialog ref="createContactDialog" />
     </v-content>
 </template>
@@ -20,7 +21,8 @@
 <script>
 import Toolbar from "@/components/Toolbar";
 import Drawer from "@/components/Drawer";
-import CreateContactDialog from '@/components/CreateContactDialog'
+import CreateContactDialog from '@/components/CreateContactDialog';
+import CreateGroupDialog from '@/components/CreateGroupDialog';
 
 export default {
   name: "Home",
@@ -30,7 +32,8 @@ export default {
   components: {
     Toolbar,
     Drawer,
-    CreateContactDialog
+    CreateContactDialog,
+    CreateGroupDialog,
   },
   data: () => ({
     //
