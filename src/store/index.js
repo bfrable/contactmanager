@@ -16,30 +16,55 @@ export const store = new Vuex.Store({
     email: null,
     contacts: [],
     groups: [],
+    drawerItems: [{
+        icon: "contacts",
+        text: "Contacts"
+      },
+      {
+        icon: "keyboard_arrow_up",
+        "icon-alt": "keyboard_arrow_down",
+        text: "Groups",
+        model: true,
+        children: [{
+          icon: "add",
+          text: "Create Group"
+        }]
+      }
+    ]
   },
   mutations: {
-    TOGGLE_DRAWER (state) {
+    TOGGLE_DRAWER(state) {
       state.drawer = !state.drawer
     },
-    SET_USER (state, payload) {
+    SET_USER(state, payload) {
       state.user = payload;
     },
-    SET_IS_AUTHENTICATED (state, payload) {
+    SET_IS_AUTHENTICATED(state, payload) {
       state.isAuthenticated = payload;
     },
-    SET_NAME (state, payload) {
+    SET_NAME(state, payload) {
       state.name = payload;
     },
-    SET_EMPLOYEE_ID (state, payload) {
+    SET_EMPLOYEE_ID(state, payload) {
       state.employeeID = payload;
     },
-    SET_EMAIL (state, payload) {
+    SET_EMAIL(state, payload) {
       state.email = payload;
     },
-    SET_GROUPS (state, payload) {
+    SET_GROUPS(state, payload) {
       state.groups.push(payload);
     },
-    SET_UID (state, payload) {
+    REMOVE_GROUP(state, payload) {
+      const index = state.groups.indexOf(payload);
+      if (index !== -1) state.groups.splice(index, 1);
+    },
+    SET_CONTACT(state, payload) {
+
+    },
+    REMOVE_CONTACT(state, payload) {
+
+    },
+    SET_UID(state, payload) {
       state.uid = payload;
     }
   },
@@ -117,12 +142,12 @@ export const store = new Vuex.Store({
         })
         .then(() => {
           firebase.database().ref(`/users/${this.state.uid}/groups`).once('value')
-          .then(function(snapshot) {                
-            snapshot.forEach(function(group) {
-              commit('SET_GROUPS', group.key);
+            .then(function (snapshot) {
+              snapshot.forEach(function (group) {
+                commit('SET_GROUPS', group.key);
+              });
+              router.push('/home');
             });
-            router.push('/home');
-          });
         })
         .catch((err) => {
           alert(err.message);
@@ -130,44 +155,75 @@ export const store = new Vuex.Store({
           commit('SET_IS_AUTHENTICATED', false);
         });
     },
-    // createContact({
-    //   commit
-    // }, {
-    //   contactName,
-    //   contactUID,
-    //   contactPhone,
-    //   contactEmail,
-    //   contactGroups
-    // }) {
-    //   firebase.database().ref(`users/${user.uid}/contacts/${contactUID}`).set({
-    //     contactName: contactName,
-    //     contactEmail: contactEmail,
-    //     contactPhone: contactPhone,
-    //     contactGroups: contactGroups || []
-    //   })
-    //   .then(() => {
-        
-    //   })
-    //   .catch((err) => {
-    //     alert(err.message);
-    //     commit('setUser', null);
-    //     commit('setIsAuthenticated', false);
-    //   });
-    // },
+    createContact({
+      commit
+    }, {
+      contactName,
+      contactUID,
+      contactPhone,
+      contactEmail
+    }) {
+      firebase.database().ref(`users/${this.state.uid}/contacts/`).child(contactUID).set({
+        contactName: contactName,
+        contactEmail: contactEmail,
+        contactPhone: contactPhone,
+      })
+      .then(() => {
+
+      })
+      .catch((err) => {
+        alert(err.message);
+        commit('setUser', null);
+        commit('setIsAuthenticated', false);
+      });
+    },
+    deleteGroup({
+      commit
+    }, {
+      groupName
+    }) {
+      firebase.database().ref(`users/${this.state.uid}/groups`).child(groupName).remove()
+        .then(() => {
+          commit('REMOVE_GROUP', groupName);
+        })
+        .then(() => {
+          this.state.drawerItems[1].children.splice(1);
+          this.state.groups.forEach((groupName) => {
+            this.state.drawerItems[1].children.push({
+              icon: 'group',
+              text: groupName,
+              groupName: groupName
+            });
+          });
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    },
     createGroup({
-        commit
-      }, {
-        groupName
-      }) {
-        firebase.database().ref(`users/${this.state.uid}/groups`).child(groupName).set({
+      commit
+    }, {
+      groupName
+    }) {
+      firebase.database().ref(`users/${this.state.uid}/groups`).child(groupName).set({
           groupName
         })
         .then(() => {
           commit('SET_GROUPS', groupName);
         })
+        .then(() => {
+          this.state.drawerItems[1].children.splice(1);
+          this.state.groups.forEach((groupName) => {
+            this.state.drawerItems[1].children.push({
+              icon: 'group',
+              text: groupName,
+              groupName: groupName
+            });
+          });
+        })
         .catch((err) => {
           alert(err.message);
         });
-      },
+    },
   }
 });

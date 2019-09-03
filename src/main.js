@@ -41,9 +41,16 @@ new Vue({
 
           firebase.database().ref(`/users/${user.uid}/groups`).once('value')
           .then((snapshot) => {
-            console.log(snapshot); 
             snapshot.forEach((group) => {
               this.$store.commit('SET_GROUPS', group.key);
+            });
+          })
+          .then(() => {
+            this.$store.state.groups.forEach((groupName) => {
+              this.$store.state.drawerItems[1].children.push({
+                icon: 'group',
+                text: groupName
+              });
             });
           });
         } else {

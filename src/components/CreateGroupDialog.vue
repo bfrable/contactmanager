@@ -38,9 +38,6 @@ export default {
       })
       .then(() => {
           this.toggleDialog = false;
-          alert(this.groupName);
-          // eslint-disable-next-line
-          console.log('user' + this.$store.state.user.user);
       })
       .catch((err) => {
           // eslint-disable-next-line

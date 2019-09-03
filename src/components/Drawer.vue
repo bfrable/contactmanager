@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-if="this.$store.state.drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
     <v-list dense>
-      <template v-for="item in items">
+      <template v-for="item in this.$store.state.drawerItems">
         <v-row v-if="item.heading" :key="item.heading" align="center">
           <v-col cols="6">
             <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
@@ -24,13 +24,16 @@
           <v-list-item
             v-for="(child, i) in item.children"
             :key="i"
-            @click="toggleCreateGroupDialog()"
+            @click="i == 0 ? toggleCreateGroupDialog() : ''"
           >
             <v-list-item-action v-if="child.icon">
               <v-icon>{{ child.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>{{ child.text }}</v-list-item-title>
+              <v-list-item-title>
+                  {{ child.text }}
+                  <span v-if="!i == 0" class="delete-group" @click.stop="deleteGroup(child.text || child.groupName)"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">delete</i></span>
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -53,27 +56,29 @@ export default {
     //
   },
   data: () => ({
-    items: [
-      {
-        icon: "contacts",
-        text: "Contacts"
-      },
-      {
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
-        text: "Groups",
-        model: true,
-        children: [{ 
-          icon: "add", 
-          text: "Create Group"
-        }]
-      }
-    ]
+    //
   }),
   methods: {
     toggleCreateGroupDialog() {
       this.$root.$children[0].$children[0].$children[0].$refs.createGroupDialog.toggleDialog = !this.$root.$children[0].$children[0].$children[0].$refs.createGroupDialog.toggleDialog;
-    }
+    },
+    deleteGroup(groupName) {
+      this.$store.dispatch('deleteGroup', {
+        groupName: groupName
+      });
+    },
   }
 };
 </script>
+
+<style scoped lang="scss">
+
+    .delete-group {
+        float: right;
+
+        i {
+            font-size: 18px;
+        }
+    }
+
+</style>
