@@ -24,7 +24,7 @@
           <v-list-item
             v-for="(child, i) in item.children"
             :key="i"
-            @click="i == 0 ? toggleCreateGroupDialog() : openGroupContacts(child.groupName)"
+            @click="i == 0 ? toggleCreateGroupDialog() : openGroupContacts(child.text || child.groupName)"
           >
             <v-list-item-action v-if="child.icon">
               <v-icon>{{ child.icon }}</v-icon>
@@ -62,7 +62,7 @@ export default {
     //
   },
   data: () => ({
-    //
+ 
   }),
   methods: {
     toggleCreateGroupDialog() {

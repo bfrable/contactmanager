@@ -267,6 +267,24 @@ export const store = new Vuex.Store({
           alert(err.message);
         });
     },
+    loadGroupContacts({
+      commit
+    }, {
+      groupName,
+    }) {
+      // TODO
+      firebase.database().ref(`/users/${this.state.uid}/groups/${groupName}/contacts`).once('value')
+        .then((snapshot) => {
+          snapshot.forEach((contact) => {
+            commit('SET_CONTACTS', {
+              contactName: contacts.val().contactName,
+              contactEmail: contacts.val().contactEmail,
+              contactPhone: contacts.val().contactPhone,
+              contactUID: contacts.val().contactUID
+            });
+          });
+        });
+    },
     logOut({ commit }) {
       firebase.auth().signOut()
         .then(() => {
