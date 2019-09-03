@@ -1,5 +1,11 @@
 # contact-management
 
+## TODOS
+1. Create config to make sign up company specific / restricted to domain
+2. Load Group Contacts
+3. Load All Contacts
+4. Fix validation on fields
+
 ## Project setup
 ```
 npm install
@@ -27,9 +33,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-### TODOS
-1. Create config to make sign up company specific / restricted to domain
-2. Load Group Contacts
-3. Load All Contacts
-4. Fix validation on fields
