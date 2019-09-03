@@ -52,6 +52,19 @@ new Vue({
                 text: groupName
               });
             });
+          })
+          .then(() => {
+            firebase.database().ref(`/users/${user.uid}/contacts`).once('value')
+            .then((snapshot) => {
+              snapshot.forEach((contacts) => {
+                this.$store.commit('SET_CONTACTS', {
+                  contactName: contacts.val().contactName,
+                  contactEmail: contacts.val().contactEmail,
+                  contactPhone: contacts.val().contactPhone,
+                  contactUID: contacts.val().contactUID
+                });
+              });
+            });
           });
         } else {
             router.push('/');

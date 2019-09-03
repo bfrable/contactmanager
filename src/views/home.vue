@@ -4,9 +4,7 @@
         <Drawer />
 
         <v-container class="fill-height" fluid>
-            This is the contacts
-
-            {{ this.$store.state.email }}
+            <Contacts />
         </v-container>
 
         <v-btn bottom color="pink" dark fab fixed right @click="toggleCreateContactDialog()">
@@ -23,6 +21,7 @@ import Toolbar from "@/components/Toolbar";
 import Drawer from "@/components/Drawer";
 import CreateContactDialog from '@/components/CreateContactDialog';
 import CreateGroupDialog from '@/components/CreateGroupDialog';
+import Contacts from '@/components/Contacts';
 
 export default {
   name: "Home",
@@ -34,6 +33,7 @@ export default {
     Drawer,
     CreateContactDialog,
     CreateGroupDialog,
+    Contacts
   },
   data: () => ({
     //

@@ -58,11 +58,8 @@ export const store = new Vuex.Store({
       const index = state.groups.indexOf(payload);
       if (index !== -1) state.groups.splice(index, 1);
     },
-    SET_CONTACT(state, payload) {
-
-    },
-    REMOVE_CONTACT(state, payload) {
-
+    SET_CONTACTS(state, payload) {
+      state.contacts.push(payload)
     },
     SET_UID(state, payload) {
       state.uid = payload;
@@ -149,6 +146,22 @@ export const store = new Vuex.Store({
               router.push('/home');
             });
         })
+        .then(() => {
+          firebase.database().ref(`/users/${this.state.uid}/contacts`).once('value')
+            .then(function (snapshot) {
+              snapshot.forEach(function (contacts) {
+                contacts.forEach(function(contact){
+                  commit('SET_CONTACTS', {
+                    contactName: contact.contactName,
+                    contactEmail: contact.contactEmail,
+                    contactPhone: contact.contactPhone,
+                    contactUID: contact.contactUID
+                  });
+                })
+              });
+              router.push('/home');
+            });
+        })
         .catch((err) => {
           alert(err.message);
           commit('SET_USER', null);
@@ -167,14 +180,21 @@ export const store = new Vuex.Store({
         contactName: contactName,
         contactEmail: contactEmail,
         contactPhone: contactPhone,
+        contactUID: contactUID
       })
       .then(() => {
-
+        commit('SET_CONTACTS', {
+          contactName: contactName,
+          contactEmail: contactEmail,
+          contactPhone: contactPhone,
+          contactUID: contactUID
+        });
+      })
+      .then(() => {
+        console.log(this.state.contacts);
       })
       .catch((err) => {
         alert(err.message);
-        commit('setUser', null);
-        commit('setIsAuthenticated', false);
       });
     },
     deleteGroup({

@@ -10,7 +10,6 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text color="primary">More</v-btn>
         <div class="flex-grow-1"></div>
         <v-btn text color="primary" @click="toggleDialog = false">Cancel</v-btn>
         <v-btn text @click="createGroup()">Save</v-btn>
@@ -38,6 +37,7 @@ export default {
       })
       .then(() => {
           this.toggleDialog = false;
+          this.groupName = '';
       })
       .catch((err) => {
           // eslint-disable-next-line
