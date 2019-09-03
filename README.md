@@ -5,6 +5,7 @@
 2. Load Group Contacts
 3. Load All Contacts
 4. Fix validation on fields
+5. Fix logout / login state error
 
 ## Project setup
 ```
