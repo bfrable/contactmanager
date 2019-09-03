@@ -39,10 +39,13 @@ new Vue({
           this.$store.commit('SET_EMAIL', user.email);
           this.$store.commit('SET_IS_AUTHENTICATED', true);
 
+          
           firebase.database().ref(`/users/${user.uid}/groups`).once('value')
           .then((snapshot) => {
             snapshot.forEach((group) => {
-              this.$store.commit('SET_GROUPS', group.key);
+              if (!this.$store.state.groups.length) {
+                this.$store.commit('SET_GROUPS', group.key);
+              }
             });
           })
           .then(() => {
@@ -54,17 +57,17 @@ new Vue({
             });
           })
           .then(() => {
-            firebase.database().ref(`/users/${user.uid}/contacts`).once('value')
-            .then((snapshot) => {
-              snapshot.forEach((contacts) => {
-                this.$store.commit('SET_CONTACTS', {
-                  contactName: contacts.val().contactName,
-                  contactEmail: contacts.val().contactEmail,
-                  contactPhone: contacts.val().contactPhone,
-                  contactUID: contacts.val().contactUID
+              firebase.database().ref(`/users/${user.uid}/contacts`).once('value')
+              .then((snapshot) => {
+                snapshot.forEach((contacts) => {
+                  this.$store.commit('SET_CONTACTS', {
+                    contactName: contacts.val().contactName,
+                    contactEmail: contacts.val().contactEmail,
+                    contactPhone: contacts.val().contactPhone,
+                    contactUID: contacts.val().contactUID
+                  });
                 });
               });
-            });
           });
         } else {
             router.push('/');

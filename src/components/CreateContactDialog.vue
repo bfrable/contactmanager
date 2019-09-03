@@ -3,26 +3,21 @@
     <v-card>
       <v-card-title class="blue">Create Contact</v-card-title>
       <v-container>
-          <v-col class="align-center justify-space-between" cols="12">
-            <v-row align="center">
-              <v-avatar size="40px" class="mr-4">
-                <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt />
-              </v-avatar>
-              <v-text-field placeholder="Name" v-model="name"></v-text-field>
-            </v-row>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field prepend-icon="mail" v-model="email" placeholder="Email"></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field type="tel" prepend-icon="phone" v-model="phone" placeholder="(000) 000 - 0000"></v-text-field>
-          </v-col>
+          <v-form v-model="valid" class="login-form">
+            <v-col cols="12">
+                <v-text-field prepend-icon="person" v-model="name" label="Name" :rules="[rules.required,]"></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field prepend-icon="mail" v-model="email" :rules="emailRules" label="Email" required></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field type="tel" prepend-icon="phone" v-model="phone" placeholder="(000) 000 - 0000" :rules="[rules.required]"></v-text-field>
+            </v-col>
+            <div class="flex-grow-1"></div>
+            <v-btn text color="primary" @click="toggleDialog = false">Cancel</v-btn>
+            <v-btn text @click.stop="createContact()">Save</v-btn>
+          </v-form>
       </v-container>
-      <v-card-actions>
-        <div class="flex-grow-1"></div>
-        <v-btn text color="primary" @click="toggleDialog = false">Cancel</v-btn>
-        <v-btn text @click="createContact()">Save</v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -37,10 +32,19 @@ export default {
     //
   },
   data: () => ({
+    valid: false,
     toggleDialog: false,
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+/.test(v) || 'E-mail must be valid'
+    ],
+    rules: {
+      required: value => !!value || 'Required.',
+      min: v => v.length >= 8 || 'Min 8 characters'
+    }
   }),
   methods: {
     createContact() {

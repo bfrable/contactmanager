@@ -61,6 +61,10 @@ export const store = new Vuex.Store({
     SET_CONTACTS(state, payload) {
       state.contacts.push(payload)
     },
+    REMOVE_CONTACT(state, payload) {
+      console.log(payload);
+      state.contacts.filter(contact => contact.contactUID !== payload)
+    },
     SET_UID(state, payload) {
       state.uid = payload;
     }
@@ -139,33 +143,31 @@ export const store = new Vuex.Store({
         })
         .then(() => {
           firebase.database().ref(`/users/${this.state.uid}/groups`).once('value')
-            .then(function (snapshot) {
-              snapshot.forEach(function (group) {
-                commit('SET_GROUPS', group.key);
+            .then((snapshot) => {
+              snapshot.forEach((group) => {
+                if (!this.state.groups.length) {
+                  commit('SET_GROUPS', group.key);
+                }
               });
-              router.push('/home');
             });
         })
         .then(() => {
+          this.state.contacts.length = 0;
           firebase.database().ref(`/users/${this.state.uid}/contacts`).once('value')
-            .then(function (snapshot) {
-              snapshot.forEach(function (contacts) {
-                contacts.forEach(function(contact){
-                  commit('SET_CONTACTS', {
-                    contactName: contact.contactName,
-                    contactEmail: contact.contactEmail,
-                    contactPhone: contact.contactPhone,
-                    contactUID: contact.contactUID
-                  });
-                })
+            .then((snapshot) => {
+              snapshot.forEach((contacts) => {
+                commit('SET_CONTACTS', {
+                  contactName: contacts.val().contactName,
+                  contactEmail: contacts.val().contactEmail,
+                  contactPhone: contacts.val().contactPhone,
+                  contactUID: contacts.val().contactUID
+                });
               });
               router.push('/home');
             });
         })
         .catch((err) => {
           alert(err.message);
-          commit('SET_USER', null);
-          commit('SET_IS_AUTHENTICATED', false);
         });
     },
     createContact({
@@ -177,25 +179,37 @@ export const store = new Vuex.Store({
       contactEmail
     }) {
       firebase.database().ref(`users/${this.state.uid}/contacts/`).child(contactUID).set({
-        contactName: contactName,
-        contactEmail: contactEmail,
-        contactPhone: contactPhone,
-        contactUID: contactUID
-      })
-      .then(() => {
-        commit('SET_CONTACTS', {
           contactName: contactName,
           contactEmail: contactEmail,
           contactPhone: contactPhone,
           contactUID: contactUID
+        })
+        .then(() => {
+          commit('SET_CONTACTS', {
+            contactName: contactName,
+            contactEmail: contactEmail,
+            contactPhone: contactPhone,
+            contactUID: contactUID
+          });
+        })
+        .catch((err) => {
+          alert(err.message);
         });
-      })
-      .then(() => {
-        console.log(this.state.contacts);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
+    },
+    deleteContact({
+      commit
+    }, {
+      contactUID
+    }) {
+      firebase.database().ref(`users/${this.state.uid}/contacts`).child(contactUID).remove()
+        .then(() => {
+          let newArr = this.state.contacts.filter(contact => contact.contactUID !== contactUID)
+
+          this.state.contacts = newArr;
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     },
     deleteGroup({
       commit
@@ -245,5 +259,14 @@ export const store = new Vuex.Store({
           alert(err.message);
         });
     },
+    logOut({ commit }) {
+      firebase.auth().signOut()
+        .then(() => {
+          router.push('/');
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   }
 });

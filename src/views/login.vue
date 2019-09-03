@@ -22,8 +22,8 @@
           </v-col>
 
           <v-col cols="12" md="12" class="text-center">
-            <v-btn large color="primary" dark class="ma-2" @click.stop="logIn()">Login</v-btn>
-            <v-btn large color="success" dark class="ma-2" @click.stop="signUp()">Signup</v-btn>
+            <v-btn large color="primary" dark class="ma-2" @click="logIn()">Login</v-btn>
+            <v-btn large color="success" dark class="ma-2" @click="signUp()">Signup</v-btn>
           </v-col>
         </v-row>
       </v-form>

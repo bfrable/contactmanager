@@ -18,14 +18,14 @@
           <v-col cols="12" md="12">
             <v-text-field
               v-model="password"
-              :append-icon="show1 ? 'visibility' : 'visibility_off'"
+              :append-icon="show ? 'visibility' : 'visibility_off'"
               :rules="[rules.required, rules.min]"
-              :type="show1 ? 'text' : 'password'"
+              :type="show ? 'text' : 'password'"
               name="input-10-1"
               label="Pasword"
               hint="At least 8 characters"
               counter
-              @click:append="show1 = !show1"
+              @click:append="show = !show"
             ></v-text-field>
           </v-col>
 
@@ -46,7 +46,7 @@ export default {
     email: '',
     name: '',
     employeeID: '',
-    show1: false,
+    show: false,
     password: '',
     emailRules: [
       v => !!v || 'E-mail is required',
