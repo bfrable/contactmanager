@@ -70,7 +70,13 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
-
+    filterData: (state) => (search) =>{
+      let query = new RegExp(search , 'i');
+      console.log(query);  
+      return state.contacts.filter(data =>{      
+        return data.contactName.toLowerCase().includes(search.toLowerCase()) || data.contactPhone.toLowerCase().includes(search.toLowerCase())|| data.contactEmail.toLowerCase().includes(search.toLowerCase());
+      });
+     }
   },
   actions: {
     userJoin({
@@ -237,10 +243,12 @@ export const store = new Vuex.Store({
     createGroup({
       commit
     }, {
-      groupName
+      groupName,
+      contacts
     }) {
       firebase.database().ref(`users/${this.state.uid}/groups`).child(groupName).set({
-          groupName
+          groupName,
+          contacts
         })
         .then(() => {
           commit('SET_GROUPS', groupName);

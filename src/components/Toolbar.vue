@@ -12,14 +12,6 @@
         <v-app-bar-nav-icon @click.stop="toggleDrawer()"></v-app-bar-nav-icon>
         <span class="hidden-sm-and-down">Contacts</span>
       </v-toolbar-title>
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="search"
-        label="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
       <div class="flex-grow-1"></div>
       <v-btn
         icon

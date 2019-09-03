@@ -24,7 +24,7 @@
           <v-list-item
             v-for="(child, i) in item.children"
             :key="i"
-            @click="i == 0 ? toggleCreateGroupDialog() : ''"
+            @click="i == 0 ? toggleCreateGroupDialog() : openGroupContacts(child.groupName)"
           >
             <v-list-item-action v-if="child.icon">
               <v-icon>{{ child.icon }}</v-icon>
@@ -69,7 +69,12 @@ export default {
       this.$root.$children[0].$children[0].$children[0].$refs.createGroupDialog.toggleDialog = !this.$root.$children[0].$children[0].$children[0].$refs.createGroupDialog.toggleDialog;
     },
     deleteGroup(groupName) {
-      this.$store.dispatch('deleteGroup', {
+      confirm('Are you sure you want to delete this item?') && this.$store.dispatch('deleteGroup', {
+        groupName: groupName
+      });
+    },
+    openGroupContacts(groupName) {
+      this.$store.dispatch('loadGroupContacts', {
         groupName: groupName
       });
     },
